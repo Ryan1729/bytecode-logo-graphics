@@ -59,6 +59,14 @@ impl GameState {
             }};
         }
 
+        macro_rules! op_as_u8 {
+            ($name:ident, $x:expr, $code:expr) => {{
+                let $name = ($x) as u8;
+
+                ($code) as u32
+            }};
+        }
+
         match instruction {
             UP => {
                 turtle.1 = turtle.1.wrapping_add(1);
@@ -80,13 +88,49 @@ impl GameState {
 
         match turtle_index {
             0 => {
-                *c = set!(red, *c, (red!(*c) as u8).saturating_add(1) as u32);
+                *c = set!(
+                    red,
+                    *c,
+                    op_as_u8!(
+                        x,
+                        red!(*c),
+                        if x == 0 {
+                            1
+                        } else {
+                            x.saturating_mul(2)
+                        }
+                    )
+                );
             }
             1 => {
-                *c = set!(green, *c, (green!(*c) as u8).saturating_add(1) as u32);
+                *c = set!(
+                    green,
+                    *c,
+                    op_as_u8!(
+                        x,
+                        green!(*c),
+                        if x == 0 {
+                            1
+                        } else {
+                            x.saturating_mul(2)
+                        }
+                    )
+                );
             }
             _ => {
-                *c = set!(blue, *c, (blue!(*c) as u8).saturating_add(1) as u32);
+                *c = set!(
+                    blue,
+                    *c,
+                    op_as_u8!(
+                        x,
+                        blue!(*c),
+                        if x == 0 {
+                            1
+                        } else {
+                            x.saturating_mul(2)
+                        }
+                    )
+                );
             }
         }
     }
