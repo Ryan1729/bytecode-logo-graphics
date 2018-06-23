@@ -385,108 +385,6 @@ impl Framebuffer {
         self.buffer[Framebuffer::xy_to_i(xMid, yMid)] = colour;
     }
 
-    pub fn sspr(
-        &mut self,
-        sprite_x: u8,
-        sprite_y: u8,
-        sprite_w: u8,
-        sprite_h: u8,
-        display_x: u8,
-        display_y: u8,
-    ) {
-        const S_WIDTH: usize = GFX_WIDTH as usize;
-        const D_WIDTH: usize = SCREEN_WIDTH as usize;
-
-        let s_w = sprite_w as usize;
-        let s_h = sprite_h as usize;
-
-        let s_x = sprite_x as usize;
-        let s_y = sprite_y as usize;
-
-        let d_x = display_x as usize;
-        let d_y = display_y as usize;
-
-        let d_x_max = d_x + s_w;
-        let d_y_max = d_y + s_h;
-
-        let mut current_s_y = s_y;
-        for y in d_y..d_y_max {
-            let mut current_s_x = s_x;
-            for x in d_x..d_x_max {
-                let colour = GFX[current_s_x + current_s_y * S_WIDTH] as usize;
-                //make purple transparent
-                if colour != 2 {
-                    let index = x + y * D_WIDTH;
-                    if index < self.buffer.len() {
-                        self.buffer[index] = PALETTE[colour];
-                    }
-                }
-                current_s_x += 1;
-            }
-            current_s_y += 1;
-        }
-    }
-
-    pub fn sspr_flip_both(
-        &mut self,
-        sprite_x: u8,
-        sprite_y: u8,
-        sprite_w: u8,
-        sprite_h: u8,
-        display_x: u8,
-        display_y: u8,
-    ) {
-        const S_WIDTH: usize = GFX_WIDTH as usize;
-        const D_WIDTH: usize = SCREEN_WIDTH as usize;
-
-        let s_w = sprite_w as usize;
-        let s_h = sprite_h as usize;
-
-        let s_x = sprite_x as usize;
-        let s_y = sprite_y as usize;
-
-        let d_x = display_x as usize;
-        let d_y = display_y as usize;
-
-        let d_x_max = d_x + s_w;
-        let d_y_max = d_y + s_h;
-
-        let mut current_s_y = s_y + s_h - 1;
-        for y in d_y..d_y_max {
-            let mut current_s_x = s_x + s_w - 1;
-            for x in d_x..d_x_max {
-                let colour = GFX[current_s_x + current_s_y * S_WIDTH] as usize;
-                //make purple transparent
-                if colour != 2 {
-                    let index = x + y * D_WIDTH;
-                    if index < self.buffer.len() {
-                        self.buffer[index] = PALETTE[colour];
-                    }
-                }
-                current_s_x -= 1;
-            }
-            current_s_y -= 1;
-        }
-    }
-
-    pub fn spr(&mut self, sprite_number: u8, x: u8, y: u8) {
-        let (sprite_x, sprite_y) = get_sprite_xy(sprite_number);
-        self.sspr(sprite_x, sprite_y, 8, 8, x, y);
-    }
-
-    pub fn spr_flip_both(&mut self, sprite_number: u8, x: u8, y: u8) {
-        let (sprite_x, sprite_y) = get_sprite_xy(sprite_number);
-        self.sspr_flip_both(sprite_x, sprite_y, 8, 8, x, y);
-    }
-
-    pub fn draw_map(&mut self) {
-        for y in 0..MAP_HEIGHT {
-            for x in 0..MAP_WIDTH {
-                self.spr(MAP[x + y * MAP_WIDTH], x as u8 * 8, y as u8 * 8);
-            }
-        }
-    }
-
     pub fn print(&mut self, string: &str, mut x: u8, y: u8, colour: u8) {
         for c in string.bytes() {
             let (sprite_x, sprite_y) = get_char_xy(c);
@@ -537,15 +435,6 @@ impl Framebuffer {
             current_s_y += 1;
         }
     }
-}
-
-pub fn get_sprite_xy(sprite_number: u8) -> (u8, u8) {
-    const SPRITES_PER_ROW: u8 = GFX_WIDTH as u8 / 8;
-
-    (
-        (sprite_number % SPRITES_PER_ROW) * 8,
-        (sprite_number / SPRITES_PER_ROW) * 8,
-    )
 }
 
 pub fn get_char_xy(sprite_number: u8) -> (u8, u8) {
