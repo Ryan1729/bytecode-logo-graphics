@@ -24,7 +24,9 @@ impl GameState {
 
         for i in 0..TURTLE_COUNT {
             turtles[i] = rng.gen();
-            instructions[i] = rng.gen();
+            for j in 0..INSTRUCTION_PAIR_COUNT {
+                instructions[i][j] = rng.gen();
+            }
         }
 
         GameState {
