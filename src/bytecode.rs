@@ -85,52 +85,10 @@ impl GameState {
 
         let buffer_index = buffer_index!();
         let c = &mut framebuffer.buffer[buffer_index];
-
         match turtle_index {
-            0 => {
-                *c = set!(
-                    red,
-                    *c,
-                    op_as_u8!(
-                        x,
-                        red!(*c),
-                        if x == 0 {
-                            1
-                        } else {
-                            x.saturating_mul(2)
-                        }
-                    )
-                );
-            }
-            1 => {
-                *c = set!(
-                    green,
-                    *c,
-                    op_as_u8!(
-                        x,
-                        green!(*c),
-                        if x == 0 {
-                            1
-                        } else {
-                            x.saturating_mul(2)
-                        }
-                    )
-                );
-            }
+            0 => *c = set!(grey, *c, op_as_u8!(x, *c, x.saturating_add(1))),
             _ => {
-                *c = set!(
-                    blue,
-                    *c,
-                    op_as_u8!(
-                        x,
-                        blue!(*c),
-                        if x == 0 {
-                            1
-                        } else {
-                            x.saturating_mul(2)
-                        }
-                    )
-                );
+                *c = set!(grey, *c, op_as_u8!(x, *c, x.saturating_sub(1)));
             }
         }
     }

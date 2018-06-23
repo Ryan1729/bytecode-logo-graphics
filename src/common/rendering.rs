@@ -449,7 +449,7 @@ pub fn get_char_xy(sprite_number: u8) -> (u8, u8) {
 impl Default for Framebuffer {
     fn default() -> Self {
         let mut buffer = Vec::new();
-        buffer.resize(SCREEN_WIDTH * SCREEN_HEIGHT, PALETTE[0]);
+        buffer.resize(SCREEN_WIDTH * SCREEN_HEIGHT, 0xFF888888);
 
         Framebuffer { buffer }
     }
