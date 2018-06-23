@@ -23,7 +23,7 @@ pub const PALETTE: [u32; 16] = [
     0xffaaccff,
 ];
 
-pub const TURTLE_COUNT: usize = 1;
+pub const TURTLE_COUNT: usize = 2;
 pub const INSTRUCTION_PAIR_COUNT: usize = 256 * 16;
 
 pub struct GameState {
