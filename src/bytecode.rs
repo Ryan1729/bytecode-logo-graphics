@@ -77,6 +77,6 @@ impl GameState {
 
         let buffer_index = buffer_index!();
         let c = &mut framebuffer.buffer[buffer_index];
-        *c = set!(grey, *c, (*c).saturating_add(1));
+        *c = set!(grey, *c, (*c).wrapping_add(1));
     }
 }
