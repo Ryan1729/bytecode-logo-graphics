@@ -47,10 +47,10 @@ impl GameState {
                 ($colour & 0xFF_FF_FF_00) | $red
             };
             (green, $colour:expr, $green:expr) => {
-                ($colour & 0xFF_FF_00_FF) | $green
+                ($colour & 0xFF_FF_00_FF) | $green << 8
             };
             (blue, $colour:expr, $blue:expr) => {
-                ($colour & 0xFF_00_FF_FF) | $blue
+                ($colour & 0xFF_00_FF_FF) | $blue << 16
             };
             (grey, $colour:expr, $grey:expr) => {{
                 let bottom = $grey & 0xFF;
@@ -77,21 +77,17 @@ impl GameState {
 
         let buffer_index = buffer_index!();
         let c = &mut framebuffer.buffer[buffer_index];
-        let current = *c;
-        let new_c = if current & 1 == 0 {
-            if current >= 254 {
-                255
-            } else {
-                (current).saturating_add(2)
-            }
-        } else {
-            if current <= 1 {
-                0
-            } else {
-                (current).saturating_sub(2)
-            }
-        };
 
-        *c = set!(grey, *c, new_c);
+        match turtle_index {
+            0 => {
+                *c = set!(red, *c, (red!(*c) as u8).saturating_add(1) as u32);
+            }
+            1 => {
+                *c = set!(green, *c, (green!(*c) as u8).saturating_add(1) as u32);
+            }
+            _ => {
+                *c = set!(blue, *c, (blue!(*c) as u8).saturating_add(1) as u32);
+            }
+        }
     }
 }
