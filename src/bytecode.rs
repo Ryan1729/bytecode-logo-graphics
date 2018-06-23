@@ -85,24 +85,49 @@ impl GameState {
 
         let buffer_index = buffer_index!();
         let c = &mut framebuffer.buffer[buffer_index];
-        *c = set!(
-            grey,
-            *c,
-            op_as_u8!(current, *c, {
-                if current & 1 == 0 {
-                    if current >= 254 {
-                        255
-                    } else {
-                        (current).saturating_add(2)
-                    }
-                } else {
-                    if current <= 1 {
-                        0
-                    } else {
-                        (current).saturating_sub(2)
-                    }
-                }
-            })
-        );
+        match turtle_index {
+            0 => {
+                *c = set!(
+                    grey,
+                    *c,
+                    op_as_u8!(current, *c, {
+                        if current & 1 != 0 {
+                            if current >= 255 {
+                                254
+                            } else {
+                                (current).saturating_add(2)
+                            }
+                        } else {
+                            if current <= 0 {
+                                1
+                            } else {
+                                (current).saturating_sub(2)
+                            }
+                        }
+                    })
+                );
+            }
+            _ => {
+                *c = set!(
+                    grey,
+                    *c,
+                    op_as_u8!(current, *c, {
+                        if current & 1 == 0 {
+                            if current >= 254 {
+                                255
+                            } else {
+                                (current).saturating_add(2)
+                            }
+                        } else {
+                            if current <= 1 {
+                                0
+                            } else {
+                                (current).saturating_sub(2)
+                            }
+                        }
+                    })
+                );
+            }
+        }
     }
 }
