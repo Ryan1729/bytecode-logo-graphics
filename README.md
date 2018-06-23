@@ -1,5 +1,11 @@
 # Stack-based WASM Shenzhen solitaire
 
+This is a fork of [another repo of mine](https://github.com/Ryan1729/stack-based-wasm-shenzhen-solitaire) which is being made largely on a lark. 
+
+What follows is the README for the repo linked above.
+
+# Stack-based WASM Shenzhen solitaire
+
 This is a fork of [my own non-stack-based version of the same game](https://github.com/Ryan1729/wasm_shenzhen_solitaire). You are most likely to be more interested in the other one since this one exists just for my own practice at expressing solitaire games in a stack-based style since I plan to do so in another project.
 
 What follows is the README for the version linked above, so the playable version link is for that version. Note though the licensing that the license applies to both versions.
