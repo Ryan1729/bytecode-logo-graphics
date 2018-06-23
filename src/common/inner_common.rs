@@ -23,13 +23,11 @@ pub const PALETTE: [u32; 16] = [
     0xffaaccff,
 ];
 
-use vm::VM;
-
-pub const TURTLE_COUNT: usize = 256;
-pub const INSTRUCTION_PAIR_COUNT: usize = 8;
+pub const TURTLE_COUNT: usize = 256 * 8;
+pub const INSTRUCTION_PAIR_COUNT: usize = 16;
 
 pub struct GameState {
-    pub turtles: [(u8, u8); 256],
+    pub turtles: [(u8, u8); TURTLE_COUNT],
     pub instructions: [[u8; INSTRUCTION_PAIR_COUNT]; TURTLE_COUNT],
 }
 
