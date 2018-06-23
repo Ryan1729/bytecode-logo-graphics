@@ -66,16 +66,16 @@ impl GameState {
 
         match instruction {
             UP => {
-                turtle.1 = turtle.1.saturating_add(1);
+                turtle.1 = turtle.1.wrapping_add(1);
             }
             DOWN => {
-                turtle.1 = turtle.1.saturating_sub(1);
+                turtle.1 = turtle.1.wrapping_sub(1);
             }
             LEFT => {
-                turtle.0 = turtle.0.saturating_add(1);
+                turtle.0 = turtle.0.wrapping_add(1);
             }
             RIGHT => {
-                turtle.0 = turtle.0.saturating_sub(1);
+                turtle.0 = turtle.0.wrapping_sub(1);
             }
 
             RED_INC => {
